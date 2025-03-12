@@ -13,8 +13,8 @@ class UserController extends Controller
         return view('user', ['data' => $user]);
     }
 
+    // Tambahkan method tambah untuk menampilkan form tambah user
     public function tambah(){
-
         return view('user_tambah');
     }
 }
