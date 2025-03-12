@@ -18,6 +18,8 @@ class UserController extends Controller
             'level_id' => 2
             ]
         );
+        
+        $user->save();
 
         // Kirim data ke view
         return view('user', ['data' => $manager]);
