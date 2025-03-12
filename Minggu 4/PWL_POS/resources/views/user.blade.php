@@ -4,27 +4,22 @@
     <title>Data User</title>
 </head>
 <body>
-    <h1>Data User</h1>
-    <a href="/user/tambah">+ Tambah User</a>
-    <table border="1" cellpadding="2" cellspacing="0">
-        <tr>
-            <td>ID</td>
-            <td>Username</td>
-            <td>Nama</td>
-            <td>ID Level Pengguna</td>
-            <td>Aksi</td>
-        </tr>
-        @foreach ($data as $d)
-        <tr>
-            <td>{{ $d->user_id }}</td>
-            <td>{{ $d->username }}</td>
-            <td>{{ $d->nama }}</td>
-            <td>{{ $d->level_id }}</td>
-            <td>
-                <a href="/user/ubah/{{ $d->user_id }}">Ubah</a>
-            </td>
-        </tr>
-        @endforeach
-    </table>
+    <h1>Form Tambah Data User</h1>
+    <form method="post" action="/user/tambah_simpan"></form>
+        {{ csrf_field() }}
+
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Masukkan Username">
+        <br>
+        <label>Nama</label>
+        <input type="text" name="nama" placeholder="Masukkan Nama">
+        <br>
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Masukkan Password">
+        <br>
+        <label>Level ID</label>
+        <input type="number" name="level_id" placeholder="Masukkan ID Level">
+        <br><br>
+        <input type="submit" class="btn btn-success" value="Simpan">
 </body>
 </html>
