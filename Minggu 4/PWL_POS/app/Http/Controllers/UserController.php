@@ -28,4 +28,22 @@ class UserController extends Controller
         ]);
         return redirect('/user');   //mengirimkan tampilan kepada view 'user.blade.php'
     }
+    public function ubah($id)   //mengambil data yang sesuai dengan ID yang dipilih
+    {
+        $user = UserModel::find($id);   //mencari ID yang dipilih
+        return view('user_ubah', ['data' => $user]);    //mengirimkan tampilan ke 'user.blade.php'
+    }
+    public function ubah_simpan($id, Request $request){
+
+        $user = UserModel :: find($id);
+
+        $user->username = $request->username;
+        $user->nama = $request->nama;
+        $user->password = Hash::make('$request->password');
+        $user->level_id = $request->level_id;
+
+        $user->save();
+
+        return redirect('/user');
+    }
 }
