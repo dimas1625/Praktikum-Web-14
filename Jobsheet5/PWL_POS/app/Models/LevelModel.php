@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LevelModel extends Model
 {
-    protected $table = 'm_user';
+    protected $table = 'm_level';
     protected $primaryKey = 'user_id';
+    protected $fillable = ['level_nama', 'level_kode'];
 
     public function user(): BelongsTo {
 
