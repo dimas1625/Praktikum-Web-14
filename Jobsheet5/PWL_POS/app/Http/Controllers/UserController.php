@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
+use Monolog\Level;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -21,9 +22,12 @@ class UserController extends Controller
 
         $activeMenu = 'user'; // set menu yang sedang aktif
 
+        $level = LevelModel::all(); // ambil data level untuk filter level
+
         return view('user.index', [
             'breadcrumb' => $breadcrumb,
             'page' => $page,
+            'level' => $level,
             'activeMenu' => $activeMenu
         ]);
     }
@@ -32,6 +36,11 @@ public function list(Request $request)
 {
     $users = UserModel::select('user_id', 'username', 'nama', 'level_id')
         ->with('level');
+
+    // filter data user berdasarkan level_id
+    if ($request->level_id) {
+        $users->where('level_id', $request->level_id);
+    }
 
     return DataTables::of($users)
         // Menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
