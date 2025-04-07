@@ -1,15 +1,24 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BarangController;
-use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KategoriController; 
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Monolog\level;
 
+Route::pattern('id', '[0-9]+'); // artinya ketika ada parameter {id}, maka harus berupa angka
+
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login', [AuthController::class, 'postLogin']);
+Route::get('logout', [AuthController::class, 'logout'])->middleware('auth');
+
+Route::middleware(['auth'])->group(function() {
 
 Route::get('/', [WelcomeController::class, 'index']);
 
@@ -94,4 +103,5 @@ Route::prefix('barang')->group(function () {
     Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax
     Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // Untuk hapus data user Ajax
     Route::delete('/{id}', [BarangController::class, 'destroy']);
+    });
 });
