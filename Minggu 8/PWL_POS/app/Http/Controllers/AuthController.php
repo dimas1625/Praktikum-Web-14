@@ -1,7 +1,7 @@
 <?php
  
  namespace App\Http\Controllers;
-
+ 
  use App\Models\UserModel;
  use App\Models\LevelModel;
  use Illuminate\Http\Request;
@@ -13,12 +13,14 @@
  {
      public function login()
      {
-         if (Auth::check()) { // jika sudah login, maka redirect ke halaman home
+         // Jika sudah login, maka redirect ke halaman home
+         if (Auth::check()) {
              return redirect('/');
          }
+ 
          return view('auth.login');
      }
-     
+ 
      public function postlogin(Request $request)
      {
          if ($request->ajax() || $request->wantsJson()) {
@@ -83,7 +85,7 @@
              'level_id' => $request->level_id,
              'username' => $request->username,
              'nama' => $request->nama,
-             'password' => $request->password, // Tidak perlu melakukan hash karena sudah di-hash otomatis oleh casts pada UserModel
+             'password' =>  bcrypt($request->password), 
          ]);
  
          Auth::login($user);
@@ -94,4 +96,4 @@
              'redirect' => url('/')
          ]);
      }
-}
+ }

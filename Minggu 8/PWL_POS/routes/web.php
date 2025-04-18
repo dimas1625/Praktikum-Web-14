@@ -41,6 +41,8 @@ Route::middleware(['authorize:ADM'])->group(function () {
         Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax
         Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data user Ajax
         Route::delete('/{id}', [LevelController::class, 'destroy']);
+        Route::get('/import', [LevelController::class, 'import']);
+        Route::post('/import_ajax', [LevelController::class, 'import_ajax']);
     });      
 });
 
@@ -60,6 +62,8 @@ Route::middleware(['authorize:ADM'])->group(function () {
         Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax
         Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
         Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
+        Route::get('/import', [UserController::class, 'import']);
+        Route::post('/import_ajax', [UserController::class, 'import_ajax']);
     });
 });
 
@@ -71,6 +75,8 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::post('/', [BarangController::class, 'store']);
         Route::get('/create_ajax', [BarangController::class, 'create_ajax']); // Menampilkan halaman form tambah user Ajax
         Route::post('/ajax', [BarangController::class, 'store_ajax']);         // Menyimpan data user baru Ajax
+        Route::get('/import', [BarangController::class, 'import']); // ajax upload excel
+        Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
         Route::get('/{id}', [BarangController::class, 'show']);
         Route::get('/{id}/edit', [BarangController::class, 'edit']);
         Route::put('/{id}', [BarangController::class, 'update']);
@@ -79,8 +85,6 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::get('/{id}/delete_ajax', [BarangController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax
         Route::delete('/{id}/delete_ajax', [BarangController::class, 'delete_ajax']); // Untuk hapus data user Ajax
         Route::delete('/{id}', [BarangController::class, 'destroy']);
-        Route::get('/import', [BarangController::class, 'import']); // ajax upload excel
-        Route::post('/import_ajax', [BarangController::class, 'import_ajax']); // ajax import excel
     });
 });
 
@@ -92,6 +96,8 @@ Route::middleware(['authorize:ADM,MNG,STF'])->group(function () {
         Route::get('/create_ajax', [KategoriController::class, 'create_ajax']); // Menampilkan halaman form tambah user Ajax
         Route::post('/ajax', [KategoriController::class, 'store_ajax']);         // Menyimpan data user baru Ajax
         Route::post('/', [KategoriController::class, 'store']);
+        Route::get('/import', [KategoriController::class, 'import']);
+        Route::post('/import_ajax', [KategoriController::class, 'import_ajax']);
         Route::get('/{id}/edit', [KategoriController::class, 'edit']);
         Route::put('/{id}', [KategoriController::class, 'update']);
         Route::get('/{id}/edit_ajax', [KategoriController::class, 'edit_ajax']);  // Menampilkan halaman form edit user Ajax
@@ -113,6 +119,8 @@ Route::middleware(['authorize:ADM,MNG'])->group(function () {
         Route::get('/{id}', [SupplierController::class, 'show']);
         Route::get('/{id}/edit', [SupplierController::class, 'edit']);
         Route::put('/{id}', [SupplierController::class, 'update']);
+        Route::get('/import', [SupplierController::class, 'import']);
+        Route::post('/import_ajax', [SupplierController::class, 'import_ajax']);
         Route::get('/{id}/edit_ajax', [SupplierController::class, 'edit_ajax']);  // Menampilkan halaman form edit user Ajax
         Route::put('/{id}/update_ajax', [SupplierController::class, 'update_ajax']);     // Menyimpan perubahan data user Ajax
         Route::get('/{id}/delete_ajax', [SupplierController::class, 'confirm_ajax']); // Untuk tampilkan form confirm delete user Ajax

@@ -5,6 +5,7 @@
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         <div class="card-tools">
+            <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-sm btn-info mt-1">Import User</button>
             <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
             <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah AJAX</button>
         </div>
@@ -61,39 +62,76 @@
 
 @push('js')
 <script>
-    function modalAction(url = '') {
-        $('#myModal').load(url, function() {
-            $('#myModal').modal('show');
-        });
+// Pastikan setiap Ajax request mengirimkan CSRF Token
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
+});
 
-    var dataUser;
-    $(document).ready(function() {
-        dataUser = $('#table_user').DataTable({
-            serverSide: true,
-            processing: true, // Supaya muncul indikator "processing"
-            ajax: {
-                url: "{{ url('user/list') }}",
-                type: "POST",
-                dataType: "json",
-                data: function(d) {
-                    // Ambil value filter level_id
-                    d.level_id = $('#level_id').val();
-                }
-            },
-            columns: [
-                { data: "DT_RowIndex", className: "text-center", orderable: false, searchable: false },
-                { data: "username", orderable: true, searchable: true },
-                { data: "nama", orderable: true, searchable: true },
-                { data: "level.level_nama", orderable: false, searchable: false },
-                { data: "aksi", orderable: false, searchable: false }
-            ]
-        });
-
-        // Pastikan pakai selector #level_id (bukan $('$level_id'))
-        $('#level_id').on('change', function() {
-            dataUser.ajax.reload();
-        });
+// Fungsi untuk menampilkan modal
+function modalAction(url = '') {
+    $('#myModal').load(url, function () {
+        $('#myModal').modal('show');
     });
+}
+
+var dataUser;
+$(document).ready(function() {
+    dataUser = $('#table_user').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ url('user/list') }}",
+            dataType: "json",
+            type: "POST",
+            data: function(d) {
+                d.level_id = $('#level_id').val();
+            }
+        },
+        columns: [
+            {
+                // Menampilkan nomor urut (pastikan server mengirimkan DT_RowIndex)
+                data: "DT_RowIndex",
+                className: "text-center",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "username",
+                orderable: true,
+                searchable: true
+            },
+            {
+                data: "nama",
+                orderable: true,
+                searchable: true
+            },
+            {
+                // Menampilkan nama level dari relasi (pastikan query server mengembalikan data level dengan key level_nama)
+                data: "level.level_nama",
+                orderable: false,
+                searchable: false
+            },
+            {
+                data: "aksi",
+                orderable: false,
+                searchable: false
+            }
+        ]
+    });
+    
+    // Trigger reload saat filter level berubah
+    $('#level_id').on('change', function() {
+         dataUser.ajax.reload();
+    });
+
+    // Pencarian via keyboard (tekan tombol Enter)
+    $('#table_user_filter input').unbind().bind('keyup', function(e) {
+         if(e.keyCode == 13) { // enter key
+             dataUser.search(this.value).draw();
+         }
+    });
+});
 </script>
 @endpush

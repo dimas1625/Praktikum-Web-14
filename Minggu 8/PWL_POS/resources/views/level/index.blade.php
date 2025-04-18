@@ -5,6 +5,7 @@
          <div class="card-header">
              <h3 class="card-title">{{ $page->title }}</h3>
              <div class="card-tools">
+                <button onclick="modalAction('{{ url('/level/import') }}')" class="btn btn-sm btn-info mt-1">Import Level</button>
                  <a class="btn btn-sm btn-primary mt-1" href="{{ url('level/create') }}">Tambah</a>
                  <button type="button" onclick="modalAction('{{ url('level/create_ajax') }}')"
                      class="btn btn-sm btn-success mt-1">Tambah
@@ -81,6 +82,11 @@
                      }
                  ]
              });
+             $('#table_level_filter input').unbind().bind().on('keyup', function(e){
+         if(e.keyCode == 13){ // enter key
+             dataLevel.search(this.value).draw();
+         }
+            });
          });
      </script>
  @endpush
