@@ -5,6 +5,7 @@
  use App\Models\LevelModel;
  use App\Models\BarangModel;
  use App\Models\KategoriModel;
+ use Barryvdh\DomPDF\Facade\Pdf;
  use Illuminate\Http\Request;
  use Illuminate\Support\Facades\Hash;
  use Illuminate\Support\Facades\Validator;
@@ -267,7 +268,7 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
          $sheet->setTitle('Data Barang'); // set title sheet
  
          $writer = IOFactory::createWriter($spreadsheet, 'Xlsx'); // create writer
-         $filename = 'Data Barang'.date('Y-m-d H:i:s').'.xlsx'; // nama file excel
+         $filename = 'Data Barang' . date('Y-m-d H:i:s') . '.xlsx'; // nama file excel
  
          header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
          header('Content-Disposition: attachment;filename="' . $filename . '"');
@@ -280,6 +281,22 @@ confirm(\'Apakah Kita yakit menghapus data ini?\');">Hapus</button></form>';*/
          
          $writer->save('php://output');
          exit;
+        }
  
+        public function export_pdf()
+        {
+            $barang = BarangModel::select('kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
+                ->orderBy('kategori_id')
+                ->orderBy('barang_kode')
+                ->with('kategori')
+                ->get();
+    
+            // use Barryvdh/DomPDF/Facade/Pdf
+            $pdf = Pdf::loadView('barang.export_pdf', ['barang' => $barang]);
+            $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+            $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url
+            $pdf->render(); // generate pdf
+    
+            return $pdf->stream('Data Barang'.date('Y-m-d H:i:s').'.pdf');
      }
 }
