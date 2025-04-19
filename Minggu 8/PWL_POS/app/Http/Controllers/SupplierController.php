@@ -3,6 +3,7 @@
  namespace App\Http\Controllers;
  
  use App\Models\SupplierModel;
+ use Barryvdh\DomPDF\Facade\Pdf;
  use Illuminate\Http\Request;
  use PhpOffice\PhpSpreadsheet\IOFactory;
  use Illuminate\Support\Facades\Validator;
@@ -316,7 +317,7 @@
      }
      public function export_excel()
      {
-         // ambil data barang yang akan di export
+         // ambil data supplier yang akan di export
          $supplier = SupplierModel::select('id', 'supplier_kode', 'supplier_nama', 'supplier_alamat')
              ->orderBy('id')
              ->get();
@@ -363,5 +364,19 @@
          
          $writer->save('php://output');
          exit;
+     }
+     public function export_pdf()
+     {
+         $supplier = SupplierModel::select('id', 'supplier_kode', 'supplier_nama', 'supplier_alamat')
+             ->orderBy('id')
+             ->get();
+ 
+         // use Barryvdh/DomPDF/Facade/Pdf
+         $pdf = Pdf::loadView('supplier.export_pdf', ['supplier' => $supplier]);
+         $pdf->setPaper('a4', 'portrait'); // set ukuran kertas dan orientasi
+         $pdf->setOption("isRemoteEnabled", true); // set true jika ada gambar dari url
+         $pdf->render(); // generate pdf
+ 
+         return $pdf->stream('Data Supplier'.date('Y-m-d H:i:s').'.pdf');
      }
  }

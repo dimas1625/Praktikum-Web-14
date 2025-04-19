@@ -7,6 +7,7 @@
         <div class="card-tools">
             <button onclick="modalAction('{{ url('/user/import') }}')" class="btn btn-sm btn-info mt-1">Import User</button>
             <a href="{{ url('user/export_excel') }}" class="btn btn-primary">Export User</a>
+            <a href="{{ url('user/export_pdf') }}" class="btn btn-warning"><i class="fa fa-filepdf"></i> Export User (PDF)</a>
             <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">Tambah AJAX</button>
         </div>
     </div>
