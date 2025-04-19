@@ -48,8 +48,12 @@ Route::middleware(['authorize:ADM'])->group(function () {
     });      
 });
 
-Route::middleware(['authorize:ADM'])->group(function () {
-    Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/profile', [UserController::class, 'profile']);
+    Route::get('/profile_ajax', [UserController::class, 'profile_ajax']);
+    Route::post('/profile_update', [UserController::class, 'profile_update']);
+    
+    Route::middleware(['authorize:ADM'])->group(function(){ // artinya semua route di dalam group ini harus punya role ADM (Administrator)
         Route::get('/', [UserController::class, 'index']);          // menampilkan halaman awal user
         Route::post('/list', [UserController::class, 'list']);      // menampilkan data user dalam bentuk json untuk datables
         Route::get('/create', [UserController::class, 'create']);   // menampilkan halaman form tambah user
