@@ -30,8 +30,6 @@
                     <p>Dashboard</p>
                 </a>
             </li>
-                
-            @endif
             <li class="nav-header">Data Pengguna</li>
             <li class="nav-item">
                 <a href="{{ url('/level') }}" class="nav-link {{ ($activeMenu == 'level') ? 'active' : '' }}">
