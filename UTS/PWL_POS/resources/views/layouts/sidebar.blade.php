@@ -30,7 +30,8 @@
                     <p>Dashboard</p>
                 </a>
             </li>
-            
+                
+            @endif
             <li class="nav-header">Data Pengguna</li>
             <li class="nav-item">
                 <a href="{{ url('/level') }}" class="nav-link {{ ($activeMenu == 'level') ? 'active' : '' }}">
@@ -67,8 +68,14 @@
              </li>
             <li class="nav-header">Data Transaksi</li>
             <li class="nav-item">
-                <a href="{{ url('/stok') }}" class="nav-link {{ ($activeMenu == 'stok') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-cash-register"></i>
+                <a href="{{ url('/stok') }}" class="nav-link {{ $activeMenu == 'stok' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-cubes"></i>
+                    <p>Stok Barang</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/penjualan') }}" class="nav-link {{ $activeMenu == 'penjualan' ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-receipt"></i>
                     <p>Transaksi Penjualan</p>
                 </a>
             </li>
