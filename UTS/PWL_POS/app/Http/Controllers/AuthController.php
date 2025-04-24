@@ -65,7 +65,7 @@
      public function postRegister(Request $request)
      {
          $rules = [
-             'level_id' => 'required|exists:m_level,level_id',
+            //  'level_id' => 'required|exists:m_level,level_id',
              'username' => 'required|string|min:3|unique:m_user,username',
              'nama' => 'required|string|max:100',
              'password' => 'required|min:6|confirmed',
@@ -82,7 +82,7 @@
          }
  
          $user = UserModel::create([
-             'level_id' => $request->level_id,
+             'level_id' => 3,
              'username' => $request->username,
              'nama' => $request->nama,
              'password' =>  bcrypt($request->password), 

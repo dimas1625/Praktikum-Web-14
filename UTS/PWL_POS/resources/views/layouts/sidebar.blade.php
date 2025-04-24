@@ -30,6 +30,8 @@
                     <p>Dashboard</p>
                 </a>
             </li>
+            @if (Auth::check() && Auth::user()->level_id == 1)
+            @endif
             <li class="nav-header">Data Pengguna</li>
             <li class="nav-item">
                 <a href="{{ url('/level') }}" class="nav-link {{ ($activeMenu == 'level') ? 'active' : '' }}">
@@ -37,12 +39,12 @@
                     <p>Level User</p>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ url('/user') }}" class="nav-link {{ ($activeMenu == 'user') ? 'active' : '' }}">
                     <i class="nav-icon far fa-user"></i>
                     <p>Data User</p>
                 </a>
-            </li>
+            </li> --}}
             
             <li class="nav-header">Data Barang</li>
             <li class="nav-item">

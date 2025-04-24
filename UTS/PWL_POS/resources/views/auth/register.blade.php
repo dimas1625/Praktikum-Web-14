@@ -59,12 +59,12 @@
                          </div>
                          <small id="error-password_confirmation" class="error-text text-danger"></small>
                      </div>
-                     <div class="input-group mb-3">
+                     {{-- <div class="input-group mb-3">
                          <select id="level_id" name="level_id" class="form-control">
                              <option value="">Pilih Level</option>
                              @foreach($levels as $level)
                                  <option value="{{ $level->level_id }}">{{ $level->level_nama }}</option>
-                             @endforeach
+                             @endforeach --}}
                          </select>
                          <div class="input-group-append">
                              <div class="input-group-text">

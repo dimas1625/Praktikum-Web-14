@@ -121,9 +121,9 @@
                                      <tr>
                                          <th class="text-center">No</th>
                                          <th>Nama Barang</th>
-                                         {{-- <th>Harga</th>
-                                         <th>Jumlah</th> --}}
-                                         {{-- <th>Subtotal</th> --}}
+                                         <th>Harga</th>
+                                         <th>Jumlah</th>
+                                         <th>Subtotal</th>
                                      </tr>
                                  </thead>
                                  <tbody>
@@ -134,21 +134,21 @@
                                      @foreach ($filteredDetail as $d)
                                          @if ($d->penjualan_id == $p->penjualan_id)
                                              @php
-                                                 $subtotal = $d->harga_barang * $d->jumlah_barang;
+                                                 $subtotal = $d->harga * $d->jumlah;
                                                  $total += $subtotal;
                                              @endphp
                                              <tr>
                                                  <td class="text-center">{{ $loop->iteration }}</td>
                                                  <td>{{ $d->barang->barang_nama }}</td>
-                                                 {{-- <td>Rp.{{ number_format($d->harga_barang, 0, ',', '.') }}</td>
-                                                 <td>{{ $d->jumlah_barang }}</td> --}}
-                                                 {{-- <td>Rp.{{ number_format($subtotal, 0, ',', '.') }}</td> --}}
+                                                 <td>Rp.{{ number_format($d->barang->harga_jual, 0, ',', '.') }}</td>
+                                                 <td>{{ $d->jumlah }}</td>
+                                                 <td>Rp.{{ number_format($subtotal, 0, ',', '.') }}</td>
                                              </tr>
                                          @endif
                                      @endforeach
                                      <tr>
-                                         {{-- <td colspan="4" class="text-right"><strong>Total:</strong></td>
-                                         <td><strong>Rp.{{ number_format($total, 0, ',', '.') }}</strong></td> --}}
+                                         <td colspan="4" class="text-right"><strong>Total:</strong></td>
+                                         <td><strong>Rp.{{ number_format($total, 0, ',', '.') }}</strong></td>
                                      </tr>
                                      <tr>
                                          <td colspan="5" style="padding-top: 10px;"></td>
