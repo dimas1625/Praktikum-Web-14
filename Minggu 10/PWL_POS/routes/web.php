@@ -12,17 +12,7 @@ use App\Http\Controllers\WelcomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\RegisterController;
-use App\Http\Controllers\Api\LoginController;
-use App\Http\Controllers\Api\LogoutController;
 use Monolog\Level;
-
-    Route::post('/register', [RegisterController::class, 'register']);
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/logout', [LogoutController::class, 'logout']);
-    Route::middleware('auth:api')->get('/user', function (Request $request) {
-        return $request->user();
-    });
 
 Route::pattern('id', '[0-9]+');
 

@@ -1,19 +1,23 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LevelModel extends Model
 {
+    // Jika tabelmu bernama m_level:
     protected $table = 'm_level';
-    protected $primaryKey = 'user_id';
-    protected $fillable = ['level_nama', 'level_kode'];
 
-    public function user(): BelongsTo {
+    // **PENTING**: sesuaikan primary key
+    protected $primaryKey = 'level_id';
+    
+    // Jika PK-nya auto-increment integer
+    public $incrementing = true;
+    protected $keyType = 'int';
 
-        return $this->belongsTo(UserModel::class);
-    }
+    // Jika timestamp (created_at, updated_at) ada
+    public $timestamps = true;
+
+    // Kolom yang boleh di-fill massal
+    protected $fillable = ['level_kode', 'level_nama'];
 }
