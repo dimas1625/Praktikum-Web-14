@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::post('/register1', RegisterController::class)->name('register1');
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
 Route::post('/logout', [LogoutController::class, 'logout']);
 
 Route::get('levels', [LevelController::class, 'index']);
@@ -51,7 +55,3 @@ Route::post('barang', [BarangController::class, 'store']);
 Route::get('barang/{barang}', [BarangController::class, 'show']);
 Route::put('barang/{barang}', [BarangController::class, 'update']);
 Route::delete('barang/{barang}', [BarangController::class, 'destroy']);
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
